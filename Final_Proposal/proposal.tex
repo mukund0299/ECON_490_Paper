@@ -1,0 +1,116 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{varioref}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, backgrounds, decorations.markings, external, angles, quotes, intersections}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{apacite}
+\usepackage[margin=1in]{geometry}
+\usepackage{titling}
+\setlength{\droptitle}{-8em}   % This is your set screw
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\bibliographystyle{apacite}
+
+\doublespacing
+
+
+\graphicspath{ {./images/} }
+
+%Colours
+\definecolor{UBCblue}{RGB}{12, 35, 68} 
+\definecolor{UBClblue}{RGB}{0, 85, 183}
+\definecolor{UBCgreen}{RGB}{88, 162, 41} 
+\definecolor{UBCred}{RGB}{203, 29, 56}
+\definecolor{UBCgrey}{RGB}{116, 145, 163}
+
+%TODO: Get better title
+\title{Proposal}
+\author{Mukund Sundararajan}
+
+\begin{document}
+    \maketitle
+
+    \section*{Introduction and Research Question}
+    As we continue to live with the effects of the COVID-19 pandemic, the concept that technology would be used as a tool in education is non-negotiable. As classes have been forced online, it has become more of a necessity than ever to have high speed, reliable internet. However, it would be dismissive to view access to quality internet as a mere temporary replacement for in-person learning. It is easy to imagine that access to internet should allow students to search for information quickly to better their understanding on any subject, but perhaps it serves more of an entertainment role for most students rather than educational. While many students report that they regularly use the internet to complete their assignments or study for exams, it is not clear whether this is an adaptation to the availability of the internet or an extension on traditional learning.
+
+    I want to examine to what extent both access to internet as well as the speed of the connection have on educational outcomes for secondary students in British Columbia. If there is a significant effect, the primary goal then is to establish regions that would benefit from greater investment and identify the minimum connection speed to ensure all students are performing on an even playing field. The secondary objective would be examine the persistence of the rural/urban digital divide by looking at the difference in educational outcomes as a result of connection speed in these two communities. 
+
+    \section*{Background}
+    Studying the effects of broadband proliferation on key social indicators is not a novel idea. Since its introduction, the internet has fundamentally changed how we live, and its effects can be seen through many metrics. For example, a simple search pulls up studies inspecting the effect of the internet on economic growth \cite{CHOI200939}, international trade \cite{Lin2015}, and interest rates \cite{Luo2018}, among many others. Unsurprisingly then, the effect of internet usage on student performance has been studied extensively. 
+
+    Studies in this area primarily focus on the relationship between internet usage patterns and academic performance. In their paper, \citeA{Austin2011} establish that high school students who are exposed to moderate internet use at home outperform their peers who either don't have such access or show intense internet usage at a statistically significant level. Along similar lines, \citeA{XU2019166} and \citeA{siraj2015internet} show that frequent internet usage is positively associated with undergraduate student academic performance. This gap is particularly stark when compared with students who have no access or access only via a cell phone due to living in rural areas. Such students are likely to perform worse not only on exams but also on homework completion and are less likely to attend university \cite{hampton2020broadband}. Thus it is clear that access and moderate use of the internet has some impact on student performance. 
+    
+    The importance of providing high quality connections is backed up by policy objectives from the Government of Canada. The CRTC has a major objective to ensure that all Canadians have access to high quality mobile and broadband internet \cite{radio2020broadband}, supported by the Universal Broadband Fund for a total of \$2.75 billion in funding. This is adding to existing provincial initiatives, leading to much improved connectivity in rural areas \cite{rajabiun2013rural}.
+
+    However, much of the research focuses either on specific usage activity patterns, or the importance of accessibility. I want to add to this literature by looking at how important the connection quality is to student performance, which is not covered by existing literature. By examining the trends in student performance correlated with improved connectivity due to public investment, the goal is to identify what the minimum quality of connection is necessary from an educational standpoint. 
+
+    \section*{Data}
+
+    The data comes from a few different sources and is linked together programatically, and the relevant notebooks can be accessed here \href{https://github.com/mukund0299/ECON_490_Paper}{on github}. Broadband information for BC is a subset of the National Broadband Data published by Innovation, Science, and Economic Development Canada under Canada's Open Government Initiative \cite{nbd2021}. This dataset consists of hexagons of around 25 squared kilometers over which bandwidth data is aggregated. The variables of interest for each hexagon are the various boolean speed markers: cartesian product of Wired, Wireless, and Combined with (speeds notated in download/upload Mbps) 5/1, 10/2, 25/5/, 50/10, and LTE availability. With this dataset, we can establish the bandwidth availability for each hexagon. This is cross-referenced with Pseudo-Household Demographic Distribution Dataset, published by the same organisation, to retrieve population counts for each hexagon \cite{phh2020}. For the sake of brevity, only the summary statistics for the combined speeds is shown here: \vref{tab:nbd_sum}, the rest can be seen in the linked notebook. 
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{lrrrr}
+            \hline
+            {} &  Combined\_lt5\_1 &  Combined\_10\_2 &  Combined\_5\_1 &  Combined\_25\_5 \\
+            \hline
+            count &           420594.000000 &          420594.000000 &         420594.000000 &          420594.000000 \\
+            mean  &                0.938097 &               0.889478 &              0.922434 &               0.871981 \\
+            std   &                0.240979 &               0.313540 &              0.267489 &               0.334111 \\
+            min   &                0.000000 &               0.000000 &              0.000000 &               0.000000 \\
+            25\%   &                1.000000 &               1.000000 &              1.000000 &               1.000000 \\
+            50\%   &                1.000000 &               1.000000 &              1.000000 &               1.000000 \\
+            75\%   &                1.000000 &               1.000000 &              1.000000 &               1.000000 \\
+            max   &                1.000000 &               1.000000 &              1.000000 &               1.000000 \\
+            \hline
+            \end{tabular}
+            \caption{Summary Statistics for National Broadband Data}
+            \label{tab:nbd_sum}
+    \end{table}
+
+    
+    Information regarding secondary school performance is scraped from a report from the Fraser Institute, who publish an annual report cataloguing various variables of the top 250 ranked schools in BC \cite{fraser}. Variables of particular interest to us from this dataset is the grade 12 enrolment, average exam mark, graduation rate, ESL \%, Special Needs \% and overall rating. The overall rating takes into account the above variables in addition to gender gaps in academic achievements to produce an overall rating, which is tracked from 2015-2019. This is merged with a dataset from Education Analytics and published by the BC Provincial Government that contains all BC schools with indicators for French programs \cite{francophone2020}. The reason this is done is because the BC dataset contains the district number, address, and latitude/longitude of every school in BC. By combining these datasets, we can assign each populated hex to the closest school within a reasonable distance on the grid. There were some differences in the dataset, which were reconciled. The details of the transformation are available on the GitHub repository. The summary statistics for the variables of interest in the year 2019 are shown here: \vref{tab:fraser_2019}
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{lrrrrr}
+            \hline
+            {} &  \%\_ESL &  \%\_Special\_Needs &  Avg\_Exam\_Mark &  \%\_Grad & Overall \\
+            \hline
+            count &   235.000000 &             235.000000 &         235.000000 &    235.000000 &  235.000000 \\
+            mean  &     3.379574 &              11.887234 &          69.148085 &     97.065532 &    6.011915 \\
+            std   &     4.283132 &               4.780007 &           4.837914 &      2.689002 &    1.761030 \\
+            min   &     0.000000 &               0.000000 &          54.200000 &     86.700000 &    0.000000 \\
+            25\%   &     0.150000 &               8.900000 &          66.300000 &     95.300000 &    4.950000 \\
+            50\%   &     1.900000 &              11.500000 &          68.600000 &     97.700000 &    6.000000 \\
+            75\%   &     5.100000 &              14.650000 &          71.650000 &     99.100000 &    7.050000 \\
+            max   &    21.400000 &              29.100000 &          85.400000 &    100.000000 &   10.000000 \\
+            \hline
+            \end{tabular}
+            
+            
+        \caption{Summary Statistics for School Data in 2019}
+        \label{tab:fraser_2019}    
+    \end{table}
+
+
+    There are currently two ways to determine whether a region is rural or not: one solution is to look at the list of communites that are part of Rural Coordination Centre of BC, and set every school present in one of those communities as rural, and the rest as urban. Another solution is to look at the Postal Code Conversion File provided by StatCan \cite{postalcode2021} which contains a Statistcal Area Classification code that sets the metropolitan influence of each postal code. 
+
+    \section*{Methodology}
+    I think the first step here is to establish a relationship between the bandwidth availability and exam scores. In order to do this, I think a regression specification with exam scores as the dependent variable, and fastest available bandwidth as a coded independentvariable. Adding enrolment numbers, \% ESL, \% Special needs, and Rural/Urban binary control variables makes sense. It is not clear yet how to add median household income as a control as the census data is aggregated at too coarse a granularity, but that would be a good addition. 
+    
+    However, all this does is establish a correlation, I'm not sure how to show causality yet. One thought is to use a differences-in-differences model; trying to find a few rural schools that are on the same path both in terms of educational outcomes and bandwidth availability, and see if there's any divergence if bandwidth improves for some schools but not others. This requires some further digging through the combined data.
+    \newpage
+    \bibliography{references}
+
+\end{document}
