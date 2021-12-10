@@ -1,0 +1,153 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+\definecolor{ubcBlue}{RGB}{12,35,68}
+\definecolor{ubcBlue1}{RGB}{0,85,183}
+\definecolor{ubcBlue2}{RGB}{0,167,225}
+\definecolor{ubcBlue3}{RGB}{64,180,229}
+\definecolor{ubcBlue4}{RGB}{110,196,232}
+\definecolor{ubcBlue5}{RGB}{151,212,223}
+
+% \setbeamercolor{normal text}{bg=ubcBlue1}
+\setbeamercolor{alerted text}{bg=ubcBlue1, fg = ubcBlue}
+\setbeamercolor{example text}{fg=ubcBlue1, bg=ubcBlue1}
+\setbeamercolor{title separator}{fg = ubcBlue, bg=ubcBlue}
+\setbeamercolor{progress bar}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in head/foot}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{progress bar in section page}{bg=ubcBlue4, fg=ubcBlue1}
+\setbeamercolor{frametitle}{bg=ubcBlue}
+
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs,dcolumn,caption}
+\usepackage[scale=2]{ccicons}
+\usepackage{apacite}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\bibliographystyle{apacite}
+
+\makeatletter
+\newsavebox{\mybox}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \savebox{\mybox}{%
+      \begin{beamercolorbox}[%
+          wd=\paperwidth,%
+          sep=0pt,%
+          leftskip=\metropolis@frametitle@padding,%
+          rightskip=\metropolis@frametitle@padding,%
+        ]{frametitle}%
+      \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+      \end{beamercolorbox}%
+    }
+  \begin{beamercolorbox}[%
+      wd=\paperwidth,%
+      sep=0pt,%
+      leftskip=\metropolis@frametitle@padding,%
+      rightskip=\metropolis@frametitle@padding,%
+    ]{frametitle}%
+  \metropolis@frametitlestrut@start\insertframetitle\metropolis@frametitlestrut@end%
+  \hfill%
+  \raisebox{-\metropolis@frametitle@padding}{\includegraphics[height=\dimexpr\ht\mybox+\metropolis@frametitle@padding\relax]{2_2016_UBCNarrow_Signature_ReverseCMYK}}%
+    \hspace*{-\metropolis@frametitle@padding}
+  \end{beamercolorbox}%
+}
+\makeatother
+
+\title{Learning while Buffering: Impact of Bandwidth Quality on Educational Outcomes}
+\date{\today}
+%\date{}
+\author{Mukund Sundararajan}
+\institute{ECON 490}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\maketitle
+
+% \begin{frame}{Table of contents}
+%   \setbeamertemplate{section in toc}[sections numbered]
+%   \tableofcontents[hideallsubsections]
+% \end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{Background}
+  \begin{itemize}[<+->]
+    \item Experience from the ongoing Covid-19 Pandemic
+    \item Past research on usage patterns
+    \item Past research on availability and long term outcomes
+  \end{itemize}
+  \vfill
+  \only<.(1)>  {Lots of evidence to show that student access to internet has a positive effect on education}
+
+\end{frame}
+
+\begin{frame}[fragile]{Research Question}
+  \begin{itemize}[<+->]
+    \item Strong urban/rural divide in bandwidth accessibility - Digital Divide
+    \item Video tutorials impractical when faced with low bandwidth or metered connections
+  \end{itemize}
+  \vfill
+  \only<.(1)> {To what extent does having access to high quality bandwidth impact educational outcomes?}
+\end{frame}
+
+\section{Data and Methods}
+
+\begin{frame}{Data}
+  Main data sources of interest:
+  \begin{itemize}[<+->]
+    \item Fraser School Reports
+    \item National Broadband Data
+    \item 2016 Canadian Census
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Methods}
+  Preliminary OLS with specification:
+  \begin{align*}      
+    \text{Average\_Exam\_Mark}_i &= \beta_0 + \beta_1(\text{combined\_50\_10}_i) + \beta_2(\text{combined\_25\_5}_i) + \\
+                                 & \beta_3(\text{combined\_10\_2}_i) + \beta_4(\text{combined\_5\_1}_i) + \beta_5(\text{public}_i) + \\
+                                 & \beta_6(\text{percent\_ESL}_i) + \beta_7(\text{percent\_special\_needs}_i) + \epsilon_i
+  \end{align*}
+\end{frame}
+
+\section{Results and Analysis}
+\newcolumntype{d}[1]{D{.}{.}{#1}} % "decimal" column type
+\renewcommand{\ast}{{}^{\textstyle *}} % for raised "asterisks"
+\begin{frame}{Results}
+  \begin{table}[H]
+    \setlength\tabcolsep{0pt} % let LaTeX figure out amount of inter-column whitespace
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l *{3}{d{2.4}} }
+    \toprule
+     & \multicolumn{3}{c}{OLS Regression Results} \\
+    \midrule
+    combined\_5\_1  & 77.4835\ast & 86.4056\ast & 87.1048\ast \\
+                  & (6.640) & (6.467) & (6.565)\\
+    combined\_10\_2 & 65.7089\ast & 74.4091\ast & 74.6567\ast \\
+                  & (9.762) & (9.338) & (9.572)\\
+    combined\_25\_5
+                  & 86.0053\ast & 93.4669\ast & 93.8178 \\
+                  & (4.063) & (4.065) & (4.360)\\
+    combined\_50\_10
+                  & 70.7386\ast & 74.9946\ast	 & 75.7003\ast \\
+                  & (0.428) & (0.876) & (1.023)\\
+    public
+                  &  & -5.2427\ast & -4.1612\ast \\
+                  &  & (0.958) & (1.145)\\
+    school\_controls
+                  &  No & No & Yes \\
+
+    \bottomrule
+    \end{tabular*}
+  \end{table}
+\end{frame}
+
+\end{document}
+
